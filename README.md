@@ -12,7 +12,7 @@ npm install react-tiny-accordion
 ```
 
 #### Usage
-```javascript
+```jsx
 import Accordion from 'react-tiny-accordion'
 
 <Accordion className='accordion'>
