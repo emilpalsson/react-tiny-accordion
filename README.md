@@ -48,9 +48,11 @@ import Accordion from 'react-tiny-accordion'
 _Protip: Check the Codesandbox demo for a more complete styling example._
 
 #### Props
-| Prop                     | Default |
-|--------------------------|---------|
-| transitionDuration       | 500     |
-| transitionTimingFunction | 'ease'  |
-| openClassName            | 'open'  |
-| selectedIndex            |         |
+| Prop                     | Description                                                                         | Default |
+|--------------------------|-------------------------------------------------------------------------------------|---------|
+| transitionDuration       | Duration of expand/collapse transition.                                             | 500     |
+| transitionTimingFunction | Speed curve of the transition, can be any valid CSS transition timing function.     | 'ease'  |
+| openClassName            | The CSS class that should be applied to the currently expanded item.                | 'open'  |
+| selectedIndex            | Toggling an item can also be done via props.                                        |         |
+| onChange                 | Event triggered when the user toggle an item, args: index, expanded, selectedIndex. |         |
+| changeOnClick            | Set this to false if you only want to expand items via the selectedIndex prop.      | true    |

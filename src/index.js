@@ -19,13 +19,17 @@ class Accordion extends React.Component {
     clearTimeout(this.timeout)
   }
 
-  toggle(index) {
+  toggle(index, click) {
     clearTimeout(this.timeout)
 
-    // Set fixed height before collapse of current open item
+    if (click) {
+      if (this.props.onChange) this.props.onChange(index, this.state.index !== index, this.state.index !== index ? index : -1)
+      if (!this.props.changeOnClick) return
+    }
+
     if (this.state.index > -1) {
       const content = this.nodes[this.state.index].ref.children[1]
-      content.style.height = `${content.children[0].offsetHeight}px`
+      content.style.height = `${content.children[0].offsetHeight}px` // Set fixed height before collapse of current open item
     }
 
     if (this.state.index === index || index === -1) {
@@ -53,14 +57,8 @@ class Accordion extends React.Component {
       transition: `height ${this.props.transitionDuration}ms ${this.props.transitionTimingFunction}`
     }
     const nodes = React.Children.map(this.props.children, (child, index) => (
-      <div
-        key={index}
-        ref={div => {
-          this.nodes[index] = { ref: div }
-        }}
-        className={this.state.index === index ? this.props.openClassName : ''}
-      >
-        <div onClick={() => this.toggle(index)}>{child.props['data-header']}</div>
+      <div key={index} ref={div => { this.nodes[index] = { ref: div } }} className={this.state.index === index ? this.props.openClassName : ''}>
+        <div onClick={() => this.toggle(index, true)}>{child.props['data-header']}</div>
         <div style={{ ...style, height: this.getHeight(index) }}>{child}</div>
       </div>
     ))
@@ -71,7 +69,8 @@ class Accordion extends React.Component {
 Accordion.defaultProps = {
   transitionDuration: 500,
   transitionTimingFunction: 'ease',
-  openClassName: 'open'
+  openClassName: 'open',
+  changeOnClick: true
 }
 
 export default Accordion
