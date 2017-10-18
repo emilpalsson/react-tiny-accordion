@@ -2,8 +2,14 @@
   "name": "react-tiny-accordion",
   "version": "1.1.0",
   "description": "Tiny, super simple accordion for React",
-  "main": "src/index.js",
+  "main": "dist/index.js",
+  "files": [
+    "dist/index.js"
+  ],
+  "unpkg": "dist/index.js",
   "scripts": {
+    "build": "rollup src/index.js -c",
+    "prepublishOnly": "npm run build",
     "test": "jest"
   },
   "repository": {
@@ -23,6 +29,7 @@
   "homepage": "https://github.com/emilpalsson/react-tiny-accordion#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
     "enzyme": "^3.1.0",
@@ -31,7 +38,10 @@
     "jest-cli": "^21.2.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "react-test-renderer": "^16.0.0"
+    "react-test-renderer": "^16.0.0",
+    "rollup": "^0.50.0",
+    "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-uglify": "^2.0.1"
   },
   "jest": {
     "setupFiles": [
