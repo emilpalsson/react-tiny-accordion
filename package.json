@@ -1,6 +1,6 @@
 {
   "name": "react-tiny-accordion",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Tiny, super simple accordion for React",
   "main": "dist/index.js",
   "files": [
@@ -42,6 +42,9 @@
     "rollup": "^0.50.0",
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-uglify": "^2.0.1"
+  },
+  "peerDependencies": {
+    "react": ">=0.14.0"
   },
   "jest": {
     "setupFiles": [
