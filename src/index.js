@@ -3,14 +3,18 @@ import React from 'react'
 class Accordion extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      index: typeof props.selectedIndex !== 'undefined' ? props.selectedIndex : -1
-    }
+    this.index = typeof props.selectedIndex !== 'undefined' ? props.selectedIndex : -1
     this.nodes = []
+    this.state = {
+      heights: React.Children.map(
+        this.props.children,
+        (child, index) => (index === this.props.selectedIndex ? 'auto' : 0)
+      )
+    }
   }
 
   componentWillReceiveProps(props) {
-    if (typeof props.selectedIndex !== 'undefined' && this.state.index !== props.selectedIndex) {
+    if (typeof props.selectedIndex !== 'undefined' && this.index !== props.selectedIndex) {
       this.toggle(props.selectedIndex)
     }
   }
@@ -19,36 +23,62 @@ class Accordion extends React.Component {
     clearTimeout(this.timeout)
   }
 
+  close(index) {
+    setTimeout(() => this.setHeight(index, 0), 50)
+  }
+
+  setHeight(index, height, callback) {
+    const heights = this.state.heights.slice()
+    heights[index] = height
+    this.setState({ heights }, callback)
+  }
+
+  open(index) {
+    clearTimeout(this.timeout)
+    this.setHeight(index, this.nodes[index].children[1].children[0].offsetHeight, () => {
+      this.timeout = setTimeout(() => this.setHeight(index, 'auto'), this.props.transitionDuration)
+    })
+  }
+
+  setFixedHeightOnCurrentlyOpenedItem() {
+    return new Promise(resolve => {
+      if (this.index > -1) {
+        this.setHeight(
+          this.index,
+          this.nodes[this.index].children[1].children[0].offsetHeight,
+          () => resolve()
+        )
+      }
+      else {
+        resolve()
+      }
+    })
+  }
+
   toggle(index, click) {
     clearTimeout(this.timeout)
 
     if (click) {
-      if (this.props.onChange) this.props.onChange(index, this.state.index !== index, this.state.index !== index ? index : -1)
+      if (this.props.onChange) {
+        this.props.onChange(index, this.index !== index, this.index !== index ? index : -1)
+      }
       if (!this.props.changeOnClick) return
     }
 
-    if (this.state.index > -1) {
-      const content = this.nodes[this.state.index].ref.children[1]
-      content.style.height = `${content.children[0].offsetHeight}px` // Set fixed height before collapse of current open item
-    }
+    // First, set a fixed height on the currently opened item, for collapse animation to work
+    this.setFixedHeightOnCurrentlyOpenedItem().then(() => {
+      if (this.index > -1) {
+        this.close(this.index)
+      }
 
-    if (this.state.index === index || index === -1) {
-      setTimeout(() => { this.setState({ index: -1 }) }, 50)
-    } else {
-      setTimeout(() => {
-        this.setState({ index })
-        this.timeout = setTimeout(() => {
-          this.nodes[index].ref.children[1].style.height = 'auto' // Set auto height after expand
-        }, this.props.transitionDuration)
-      }, 50)
-    }
-  }
-
-  getHeight(index) {
-    if (index === this.state.index) {
-      return this.nodes.length > index ? this.nodes[index].ref.children[1].children[0].offsetHeight : 'auto'
-    }
-    return 0
+      if (index > -1 && index !== this.index) {
+        this.index = index
+        this.open(index)
+      }
+      else {
+        this.index = -1
+      }
+    })
   }
 
   render() {
@@ -57,9 +87,15 @@ class Accordion extends React.Component {
       transition: `height ${this.props.transitionDuration}ms ${this.props.transitionTimingFunction}`
     }
     const nodes = React.Children.map(this.props.children, (child, index) => (
-      <div key={index} ref={div => { this.nodes[index] = { ref: div } }} className={this.state.index === index ? this.props.openClassName : ''}>
+      <div
+        key={index}
+        ref={div => {
+          this.nodes[index] = div
+        }}
+        className={this.index === index ? this.props.openClassName : ''}
+      >
         <div onClick={() => this.toggle(index, true)}>{child.props['data-header']}</div>
-        <div style={{ ...style, height: this.getHeight(index) }}>{child}</div>
+        <div style={{ ...style, height: this.state.heights[index] }}>{child}</div>
       </div>
     ))
     return <div className={this.props.className}>{nodes}</div>
