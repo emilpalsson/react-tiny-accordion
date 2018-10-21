@@ -1,4 +1,7 @@
 # Tiny, super simple accordion for React
+[![npm](https://img.shields.io/npm/v/react-tiny-accordion.svg)](https://www.npmjs.com/package/react-tiny-accordion)
+[![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/react-tiny-accordion.svg)](https://bundlephobia.com/result?p=react-tiny-accordion)
+
 ##### Fully responsive, no resize event listeners, no dependencies, minimal markup, <80 LOC.
 
 ![Demo](http://www.emilpalsson.com/react-tiny-accordion.gif)
