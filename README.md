@@ -16,11 +16,11 @@ npm install react-tiny-accordion
 import Accordion from 'react-tiny-accordion'
 
 <Accordion className='accordion'>
-    <div data-header="Title">
-        Content
+    <div data-header="Title can be string literals">
+        Content 1
     </div>
-    <div data-header="Title">
-        Content
+    <div data-header={<OrComponents />}>
+        Content 2
     </div>
 </Accordion>
 ```
