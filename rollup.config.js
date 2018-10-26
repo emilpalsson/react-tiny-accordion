@@ -12,7 +12,6 @@ export default {
     babel(),
     uglify()
   ],
-  sourcemap: true,
   external: [ 'react' ],
   globals: {
     react: 'React'
