@@ -82,10 +82,6 @@ class Accordion extends React.Component {
   }
 
   render() {
-    const style = {
-      overflow: 'hidden',
-      transition: `height ${this.props.transitionDuration}ms ${this.props.transitionTimingFunction}`
-    }
     const nodes = React.Children.map(this.props.children, (child, index) => (
       <div
         key={index}
@@ -95,7 +91,11 @@ class Accordion extends React.Component {
         className={this.index === index ? this.props.openClassName : ''}
       >
         <div onClick={() => this.toggle(index, true)}>{child.props['data-header']}</div>
-        <div style={{ ...style, height: this.state.heights[index] }}>{child}</div>
+        <div style={{
+          overflow: 'hidden',
+          transition: `height ${this.props.transitionDuration}ms ${this.props.transitionTimingFunction}`,
+          height: this.state.heights[index] 
+        }}>{child}</div>
       </div>
     ))
     return <div className={this.props.className}>{nodes}</div>
