@@ -46,7 +46,7 @@ class Accordion extends React.Component {
         this.setHeight(
           this.index,
           this.nodes[this.index].children[1].children[0].offsetHeight,
-          () => resolve()
+          resolve
         )
       }
       else {
