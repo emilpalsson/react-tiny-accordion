@@ -1,6 +1,6 @@
 {
   "name": "react-tiny-accordion",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Tiny, super simple accordion for React",
   "main": "dist/index.js",
   "files": [
