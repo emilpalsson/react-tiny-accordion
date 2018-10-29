@@ -24,7 +24,7 @@ class Accordion extends React.Component {
   }
 
   close(index) {
-    setTimeout(() => this.setHeight(index, 0), 50)
+    setTimeout(function() { this.setHeight(index, 0) }, 50)
   }
 
   setHeight(index, height, callback) {
@@ -36,7 +36,7 @@ class Accordion extends React.Component {
   open(index) {
     clearTimeout(this.timeout)
     this.setHeight(index, this.nodes[index].children[1].children[0].offsetHeight, () => {
-      this.timeout = setTimeout(() => this.setHeight(index, 'auto'), this.props.transitionDuration)
+      this.timeout = setTimeout(function() { this.setHeight(index, 'auto') }, this.props.transitionDuration)
     })
   }
 
