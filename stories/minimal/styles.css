@@ -1,0 +1,27 @@
+.accordion {
+  border-bottom: 1px solid #999;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 400px;
+}
+
+/* Header */
+.accordion > div > div:first-of-type {
+  border: 1px solid #999;
+  border-bottom: 0;
+  padding: 1em;
+  background-color: #eee;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+/* Content */
+.accordion > div > div:last-of-type {
+  border-left: 1px solid #999;
+  border-right: 1px solid #999;
+}
+
+.inner {
+  max-height: 300px;
+  padding: 0 1em;
+  overflow: auto;
+}
