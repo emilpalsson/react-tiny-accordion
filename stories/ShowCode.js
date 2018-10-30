@@ -29,7 +29,9 @@ const dialogStyles = {
   borderRadius: 15,
   background: 'rgb(245, 242, 240)',
   padding: 5,
-  cursor: 'auto'
+  cursor: 'auto',
+  maxHeight: '80%',
+  overflow: 'auto'
 }
 
 class ShowCode extends React.Component {

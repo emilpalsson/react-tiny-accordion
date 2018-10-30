@@ -30,7 +30,7 @@ export default class Controlled extends React.Component {
 }
 
 export const docs =
-`class Controlled extends React.Component {
+`class Demo extends React.Component {
   state = {
     selectedIndex: -1
   }
