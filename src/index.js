@@ -3,19 +3,21 @@ import React from 'react'
 class Accordion extends React.Component {
   constructor(props) {
     super(props)
+    const { children, selectedIndex } = this.props
     this.index = typeof props.selectedIndex !== 'undefined' ? props.selectedIndex : -1
     this.nodes = []
     this.state = {
       heights: React.Children.map(
-        this.props.children,
-        (child, index) => (index === this.props.selectedIndex ? 'auto' : 0)
+        children,
+        (child, index) => (index === selectedIndex ? 'auto' : 0)
       )
     }
   }
 
   componentWillReceiveProps(props) {
-    if (typeof props.selectedIndex !== 'undefined' && this.index !== props.selectedIndex) {
-      this.toggle(props.selectedIndex)
+    const { selectedIndex } = props
+    if (typeof selectedIndex !== 'undefined' && this.index !== selectedIndex) {
+      this.toggle(selectedIndex)
     }
   }
 
@@ -56,13 +58,14 @@ class Accordion extends React.Component {
   }
 
   toggle(index, click) {
+    const { onChange, changeOnClick } = this.props 
     clearTimeout(this.timeout)
 
     if (click) {
-      if (this.props.onChange) {
-        this.props.onChange(index, this.index !== index, this.index !== index ? index : -1)
+      if (onChange) {
+        onChange(index, this.index !== index, this.index !== index ? index : -1)
       }
-      if (!this.props.changeOnClick) return
+      if (!changeOnClick) return
     }
 
     // First, set a fixed height on the currently opened item, for collapse animation to work
@@ -82,23 +85,24 @@ class Accordion extends React.Component {
   }
 
   render() {
+    const { transitionDuration, transitionTimingFunction, className, openClassName } = this.props
     const nodes = React.Children.map(this.props.children, (child, index) => (
       <div
         key={index}
         ref={div => {
           this.nodes[index] = div
         }}
-        className={this.index === index ? this.props.openClassName : ''}
+        className={this.index === index ? openClassName : ''}
       >
         <div onClick={() => this.toggle(index, true)}>{child.props['data-header']}</div>
         <div style={{
           overflow: 'hidden',
-          transition: `height ${this.props.transitionDuration}ms ${this.props.transitionTimingFunction}`,
+          transition: `height ${transitionDuration}ms ${transitionTimingFunction}`,
           height: this.state.heights[index] 
         }}>{child}</div>
       </div>
     ))
-    return <div className={this.props.className}>{nodes}</div>
+    return <div className={className}>{nodes}</div>
   }
 }
 
