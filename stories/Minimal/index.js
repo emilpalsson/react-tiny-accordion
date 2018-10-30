@@ -16,9 +16,12 @@ export default () => (
         <p>The guitar is a fretted musical instrument that usually has six strings. It is typically played with both hands by strumming or plucking the strings with either a guitar pick or the finger(s)/fingernails of one hand, while simultaneously fretting (pressing the strings against the frets) with the fingers of the other hand.</p>
       </div>
     </Accordion>
+    <ShowCode>{docs}</ShowCode>
+  </React.Fragment>
+)
 
-    <ShowCode>
-{`<Accordion>
+const docs =
+`<Accordion>
   <div data-header="🎹 Piano">
     <p>First item content</p>
     <p>The piano...</p>
@@ -27,7 +30,4 @@ export default () => (
     <p>Second item content</p>
     <p>The guitar...</p>
   </div>
-</Accordion>`}
-    </ShowCode>
-  </React.Fragment>
-)
+</Accordion>`

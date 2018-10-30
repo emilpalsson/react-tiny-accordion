@@ -3,13 +3,15 @@ import React from 'react'
 class Accordion extends React.Component {
   constructor(props) {
     super(props)
-    const { children, selectedIndex } = this.props
-    this.index = typeof props.selectedIndex !== 'undefined' ? props.selectedIndex : -1
+    const { selectedIndex, defaultSelectedIndex, children } = props
+    const controlled = typeof selectedIndex !== 'undefined'
+    this.index = controlled ? selectedIndex : defaultSelectedIndex
     this.nodes = []
     this.state = {
+      controlled,
       heights: React.Children.map(
         children,
-        (child, index) => (index === selectedIndex ? 'auto' : 0)
+        (child, index) => (index === this.index ? 'auto' : 0)
       )
     }
   }
@@ -58,14 +60,14 @@ class Accordion extends React.Component {
   }
 
   toggle(index, click) {
-    const { onChange, changeOnClick } = this.props 
+    const { onChange } = this.props 
     clearTimeout(this.timeout)
 
     if (click) {
       if (onChange) {
         onChange(index, this.index !== index, this.index !== index ? index : -1)
       }
-      if (!changeOnClick) return
+      if (this.state.controlled) return
     }
 
     // First, set a fixed height on the currently opened item, for collapse animation to work
@@ -110,7 +112,7 @@ Accordion.defaultProps = {
   transitionDuration: 500,
   transitionTimingFunction: 'ease',
   openClassName: 'open',
-  changeOnClick: true
+  defaultSelectedIndex: -1
 }
 
 export default Accordion

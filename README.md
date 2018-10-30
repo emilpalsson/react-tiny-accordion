@@ -48,12 +48,23 @@ import Accordion from 'react-tiny-accordion'
 ```
 _Protip: Check the Codesandbox demo for a more complete styling example._
 
+#### Migrate from v2 (DRAFT)
+**TLDR;** Replace `changeOnClick={false}` with using `defaultSelectedIndex`.
+
+If you don't use the `selectedIndex` or the `changeOnClick` prop, migrating to v3 should be seamless.
+
+Already since the first version `react-tiny-accordion` supported setting the expanded item both manually (using props), and automatically (by setting internal state on click). In v3 we decided to formalize it and use the more accepted terms controlled vs uncontrolled.
+
+Before v3, you could pass `selectedIndex`, and still use the uncontrolled behaviour by setting `changeOnClick` to `false`. In v3, we adopted [React's approach of doing form elements](https://reactjs.org/docs/forms.html):
+* We removed the `changeOnClick` prop, instead if you want to use a controlled behaviour, you simply pass the `selectedIndex` prop.
+* If you want to set the initial selected index, but still want to use the uncontrolled behaviour, you instead pass the newly introduced `defaultSelectedIndex` prop.
+
 #### Props
-| Prop                     | Description                                                                         | Default |
-|--------------------------|-------------------------------------------------------------------------------------|---------|
-| transitionDuration       | Duration of expand/collapse transition.                                             | 500     |
-| transitionTimingFunction | Speed curve of the transition, can be any valid CSS transition timing function.     | 'ease'  |
-| openClassName            | The CSS class that should be applied to the currently expanded item.                | 'open'  |
-| selectedIndex            | Toggling an item can also be done via props.                                        |         |
-| onChange                 | Event triggered when the user toggle an item, args: index, expanded, selectedIndex. |         |
-| changeOnClick            | Set this to false if you only want to expand items via the selectedIndex prop.      | true    |
+| Prop                     | Description                                                                         | Default  |
+|--------------------------|-------------------------------------------------------------------------------------|----------|
+| transitionDuration       | Duration of expand/collapse transition.                                             | `500`    |
+| transitionTimingFunction | Speed curve of the transition, can be any valid CSS transition timing function.     | `'ease'` |
+| openClassName            | The CSS class that should be applied to the currently expanded item.                | `'open'` |
+| selectedIndex            | Toggling an item can also be done via props.                                        |          |
+| onChange                 | Event triggered when the user toggle an item, args: index, expanded, selectedIndex. |          |
+| changeOnClick            | Set this to false if you only want to expand items via the selectedIndex prop.      | `true`   |
