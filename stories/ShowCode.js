@@ -32,7 +32,7 @@ const dialogStyles = {
   cursor: 'auto'
 }
 
-export default class ShowCode extends React.Component {
+class ShowCode extends React.Component {
   state = {
     visible: false
   }
@@ -62,3 +62,12 @@ export default class ShowCode extends React.Component {
     )
   }
 }
+
+const withShowCode = (Component, docs) => (
+  <React.Fragment>
+    <Component />
+    <ShowCode>{docs}</ShowCode>
+  </React.Fragment>
+)
+
+export default withShowCode
