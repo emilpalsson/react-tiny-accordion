@@ -94,7 +94,7 @@ class Accordion extends React.Component {
         ref={div => {
           this.nodes[index] = div
         }}
-        className={this.index === index ? openClassName : ''}
+        className={this.index === index ? openClassName : null}
       >
         <div onClick={() => this.toggle(index, true)}>{child.props.header}</div>
         <div style={{
