@@ -48,7 +48,7 @@ import Accordion from 'react-tiny-accordion'
 ```
 _Protip: Check the Codesandbox demo for a more complete styling example._
 
-#### Migrate from v2 (DRAFT)
+#### Migrate from v2 (DRAFT - should be extracted to separate file with only short pointers from here)
 **TLDR;** Replace `changeOnClick={false}` with using `defaultSelectedIndex`.
 
 If you don't use the `selectedIndex` or the `changeOnClick` prop, migrating to v3 should be seamless.
@@ -58,6 +58,26 @@ Already since the first version `react-tiny-accordion` supported setting the exp
 Before v3, you could pass `selectedIndex`, and still use the uncontrolled behaviour by setting `changeOnClick` to `false`. In v3, we adopted [React's approach of doing form elements](https://reactjs.org/docs/forms.html):
 * We removed the `changeOnClick` prop, instead if you want to use a controlled behaviour, you simply pass the `selectedIndex` prop.
 * If you want to set the initial selected index, but still want to use the uncontrolled behaviour, you instead pass the newly introduced `defaultSelectedIndex` prop.
+
+---
+
+We now also provide an `AccordionItem` component to use instead of `div`s, simply to drop the `data-header` attribute from the DOM. It's used the exact same way, except the header prop is now simply `header` instead of `data-header`.
+
+**Pre v3:**
+```jsx
+import Accordion from 'react-tiny-accordion'
+<Accordion>
+  <div data-header="Title">Content</div>
+</Accordion>
+```
+
+**v3:**
+```jsx
+import Accordion, { AccordionItem } from 'react-tiny-accordion'
+<Accordion>
+  <AccordionItem header="Title">Content</AccordionItem>
+</Accordion>
+```
 
 #### Props
 | Prop                     | Description                                                                         | Default  |

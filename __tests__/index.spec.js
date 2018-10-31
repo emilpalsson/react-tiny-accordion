@@ -2,27 +2,27 @@ import React from 'react';
 import { shallow, mount, render } from 'enzyme';
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import Accordion from '../src';
+import Accordion, { AccordionItem } from '../src';
 
 configure({ adapter: new Adapter() });
 
 describe('Accordion', function() {
   it('should render without throwing an error', function() {
-    expect(shallow(<Accordion><div data-header='Header'>Content</div></Accordion>).contains('Header')).toBe(true);
+    expect(shallow(<Accordion><AccordionItem header='Header'>Content</AccordionItem></Accordion>).contains('Header')).toBe(true);
   });
   
   it('should render three items when passing three children', function() {
-    const accordion = shallow(<Accordion><div data-header='Header'>Content</div><div data-header='Header'>Content</div><div data-header='Header'>Content</div></Accordion>)
+    const accordion = shallow(<Accordion><AccordionItem header='Header'>Content</AccordionItem><AccordionItem header='Header'>Content</AccordionItem><AccordionItem header='Header'>Content</AccordionItem></Accordion>)
     expect(accordion.children().length).toBe(3);
   });
   
   it("shouldn't render any child expanded when not passing selectedIndex", function() {
-    const accordion = shallow(<Accordion><div data-header='Header'>Content</div><div data-header='Header'>Content</div></Accordion>)
+    const accordion = shallow(<Accordion><AccordionItem header='Header'>Content</AccordionItem><AccordionItem header='Header'>Content</AccordionItem></Accordion>)
     expect(accordion.childAt(1).html().includes('height:auto')).toBe(false);
   });
 
   it('should render second child expanded when passing selectedIndex 1', function() {
-    const accordion = shallow(<Accordion selectedIndex={1}><div data-header='Header'>Content</div><div data-header='Header'>Content</div></Accordion>)
+    const accordion = shallow(<Accordion selectedIndex={1}><AccordionItem header='Header'>Content</AccordionItem><AccordionItem header='Header'>Content</AccordionItem></Accordion>)
     expect(accordion.childAt(1).html().includes('height:auto')).toBe(true);
   });
 });

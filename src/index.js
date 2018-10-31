@@ -96,7 +96,7 @@ class Accordion extends React.Component {
         }}
         className={this.index === index ? openClassName : ''}
       >
-        <div onClick={() => this.toggle(index, true)}>{child.props['data-header']}</div>
+        <div onClick={() => this.toggle(index, true)}>{child.props.header}</div>
         <div style={{
           overflow: 'hidden',
           transition: `height ${transitionDuration}ms ${transitionTimingFunction}`,
@@ -115,4 +115,10 @@ Accordion.defaultProps = {
   defaultSelectedIndex: -1
 }
 
+const AccordionItem = props => {
+  const { header, children, ...remainingProps } = props
+  return <div {...remainingProps}>{children}</div>
+}
+
 export default Accordion
+export { AccordionItem }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { action } from '@storybook/addon-actions';
-import Accordion from '../../src'
+import Accordion, { AccordionItem } from '../../src'
 import '../simple.css'
 
 const range = size => [...Array(size).keys()];
@@ -9,9 +9,9 @@ const items = range(50).map(i => ({ id: i, title: `Item #${i}`, content: `Conten
 export default () => (
   <Accordion className="accordion" onChange={action('onChange')}>
     {items.map(item => (
-      <div key={item.id} data-header={item.title} className="inner">
+      <AccordionItem key={item.id} header={item.title} className="inner">
         <p>{item.content}</p>
-      </div>
+      </AccordionItem>
     ))}
   </Accordion>
 )
@@ -19,8 +19,8 @@ export default () => (
 export const docs =
 `<Accordion>
   {items.map(item => (
-    <div key={item.id} data-header={item.title}>
+    <AccordionItem key={item.id} header={item.title}>
       <p>{item.content}</p>
-    </div>
+    </AccordionItem>
   ))}
 </Accordion>`
