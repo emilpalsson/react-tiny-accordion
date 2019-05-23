@@ -86,7 +86,7 @@ class Accordion extends React.Component {
 
   render() {
     const { transitionDuration, transitionTimingFunction, className, openClassName } = this.props
-    const nodes = React.Children.map(this.props.children, (child, index) => (
+    const nodes = React.Children.toArray(this.props.children).filter(x => x).map((child, index) => (
       <div
         key={index}
         ref={div => {
